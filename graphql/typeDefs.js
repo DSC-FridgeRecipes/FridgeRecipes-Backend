@@ -11,7 +11,7 @@ const typeDefs = gql`
 
   type User {
     email: String,,
-    recipes: [String],
+    recipes: [ID],
     ingredients: [String],
   }
 
@@ -20,16 +20,26 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    ### User ###
     signup(email: String): String
     login(email: String): String
-    addMyIngredient(id: ID, ingredient: String): String
-    deleteAllMyIngredient(id: ID): String
+
+    ### Recipe ###
     createRecipe(
         title: String,
         ingredientNameList: [String],
         ingredientAmountList: [String],
         content: String
         ): ID
+
+    ### User - ingredients ###
+    addMyIngredient(userId: ID, ingredient: String): String
+    deleteMyIngredient(userId: ID, ingredient: String): String
+    deleteAllMyIngredient(userId: ID): String
+
+    ### User - recipes ###
+    addMyRecipe(userId: ID, recipeId: ID): String
+    deleteMyRecipe(userId: ID, recipeId: ID): String
   }
 `;
 

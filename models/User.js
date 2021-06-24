@@ -2,7 +2,9 @@ const { model, Schema } = require('mongoose');
 
 const User = new Schema({
     email: { type: String, required: true },
-    recipes: [String],
+    recipes: [
+        { type: Schema.Types.ObjectId, ref: 'Recipe' }
+    ],
     ingredients: [String],
 });
 
