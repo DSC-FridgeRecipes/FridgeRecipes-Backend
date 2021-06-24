@@ -22,6 +22,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    signUp(email: String): String
+    login(email: String): String
     createIngredient(name: String, amount: String): String
   }
 `;

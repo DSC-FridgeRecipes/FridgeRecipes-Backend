@@ -9,4 +9,4 @@ const Recipe = new Schema({
     }],
 });
 
-module.exports = Recipe;
+module.exports = model("Recipe", Recipe);

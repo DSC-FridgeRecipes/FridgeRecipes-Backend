@@ -1,8 +1,8 @@
 const { model, Schema } = require('mongoose');
 
-const ingredientSchema = new Schema({
+const Ingredient = new Schema({
     name: String,
     amount: String,
 });
 
-module.exports = model("Ingredient", ingredientSchema);
+module.exports = model("Ingredient", Ingredient);
