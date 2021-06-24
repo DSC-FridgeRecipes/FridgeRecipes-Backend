@@ -1,5 +1,3 @@
-const { addErrorLoggingToSchema } = require("apollo-server");
-const Mongoose = require("mongoose");
 const Recipe = require("../models/Recipe");
 const User = require("../models/User");
 
@@ -92,7 +90,7 @@ module.exports = {
         return `${_user.ingredients} Delete All Ingredient Success`;
     },
 
-    /* User - ingredients */
+    /* User - recipe */
     async addMyRecipe(_, { userId, recipeId }) {
         console.log('Mutation :: addMyRecipe', userId, recipeId);
 
@@ -120,23 +118,4 @@ module.exports = {
 
         return `${_user.recipes} Remove Recipe Success`;
     },
-
-    // async createIngredient(_, { name, amount }) {
-    //     console.log('Mutation :: createIngredient', name, amount);
-    //     try {
-    //         const newIngredient = await new Ingredient({
-    //             name: name,
-    //             amount: amount,
-    //         }).save();
-
-    //         return 'createIngredient Success';
-    //     } catch (err) {
-    //         return err;
-    //     }
-    // },
-
-    // books: async () => {
-    //     console.log('Mutation :: books');
-    //     return books;
-    // }
 }

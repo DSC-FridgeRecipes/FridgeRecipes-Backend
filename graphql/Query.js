@@ -1,22 +1,19 @@
-const recipes = [
-    {
-        title: 'The Awakening',
-        author: 'Kate Chopin',
-    },
-    {
-        title: 'City of Glass',
-        author: 'Paul Auster',
-    },
-    {
-        title: 'Test Book1',
-        author: 'Test Author1',
-    },
-];
-
+const Recipe = require("../models/Recipe");
+const User = require("../models/User");
 
 module.exports = {
-    // recipes: async () => {
-    //     console.log('Query :: recipes');
-    //     return recipes;
-    // }
+    /* User - recipes */
+    async getAllMyRecipes(_, { userId }) {
+        console.log('Query :: getAllMyRecipes', userId);
+
+        const _user = await User.findById(userId);
+        if (!_user) return 'User Not Found';
+
+        const recipeIdList = _user.recipes;
+        const recipes = await Recipe.find({ _id: { $in: recipeIdList } });
+
+        if (!_user) return 'User Not Found';
+
+        return recipes;
+    },
 }

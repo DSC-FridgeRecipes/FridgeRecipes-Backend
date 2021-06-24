@@ -5,7 +5,7 @@ const typeDefs = gql`
   type Recipe {
     title: String
     ingredientNameList: [String]
-    ingredientAmoutList: [String]
+    ingredientAmountList: [String]
     content: String
   }
 
@@ -16,7 +16,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    recipes: [Recipe]
+    ### Recipe ###
+    getAllMyRecipes(userId: ID): [Recipe]
   }
 
   type Mutation {
