@@ -15,8 +15,8 @@ const recipes = [
 
 
 module.exports = {
-    recipes: async () => {
-        console.log('Query :: recipes');
-        return recipes;
-    }
+    // recipes: async () => {
+    //     console.log('Query :: recipes');
+    //     return recipes;
+    // }
 }

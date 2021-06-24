@@ -11,7 +11,9 @@ const typeDefs = gql`
   
   type Recipe {
     title: String
-    ingredients: [Ingredient]
+    ingredientNameList: [String]
+    ingredientAmoutList: [String]
+    content: String
   }
 
   # The "Query" type is special: it lists all of the available queries that
@@ -25,8 +27,14 @@ const typeDefs = gql`
     signup(email: String): String
     login(email: String): String
     addMyIngredient(id: ID, ingredient: String): String
-
-    createIngredient(name: String, amount: String): String
+    deleteAllMyIngredient(id: ID): String
+    createRecipe(
+        title: String,
+        ingredientNameList: [String],
+        ingredientAmountList: [String],
+        content: String
+        ): ID
+    # createIngredient(name: String, amount: String): String
   }
 `;
 

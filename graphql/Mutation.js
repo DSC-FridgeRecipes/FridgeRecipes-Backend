@@ -5,10 +5,12 @@ const Recipe = require("../models/Recipe");
 const User = require("../models/User");
 
 module.exports = {
+
+    /* User */
     async signup(_, { email }) {
         console.log('Mutation :: signup', email);
         try {
-            const newUser = await new User({
+            const _user = await new User({
                 email: email,
                 recipes: [],
                 ingredients: [],
@@ -29,6 +31,7 @@ module.exports = {
         return `${_user.email} login Success`;
     },
 
+    /* User - ingredient */
     async addMyIngredient(_, { id, ingredient }) {
         console.log('Mutation :: addMyIngredient', id, ingredient);
 
@@ -43,32 +46,49 @@ module.exports = {
         return `${_user.ingredients} Add Ingredient Success`;
     },
 
-    async createIngredient(_, { name, amount }) {
-        console.log('Mutation :: createIngredient', name, amount);
+    async deleteAllMyIngredient(_, { id }) {
+        console.log('Mutation :: deleteAllMyIngredient', id);
+
+        const _user = await User.findByIdAndUpdate(id,
+            {
+                $set: { ingredients: [] }
+            }
+        );
+
+        if (!_user) return 'User Not Found';
+
+        return `${_user.ingredients} Delete All Ingredient Success`;
+    },
+
+    /* Recipe */
+    async createRecipe(_, { title, ingredientNameList, ingredientAmountList, content }) {
         try {
-            const newIngredient = await new Ingredient({
-                name: name,
-                amount: amount,
+            const _recipe = await new Recipe({
+                title: title,
+                ingredientNameList: ingredientNameList,
+                ingredientAmountList: ingredientAmountList,
+                content: content
             }).save();
 
-            return 'createIngredient Success';
+            return _recipe._id;
+
         } catch (err) {
-            return err;
+            throw new Error(err);
+            return;
         }
     },
 
-    // async createRecipe(_, { title, ingredients }) {
+    // async createIngredient(_, { name, amount }) {
+    //     console.log('Mutation :: createIngredient', name, amount);
     //     try {
-    //         const newRecipe = new Recipe({
-    //             title,
-    //             ingredients,
-    //         })
-    //         const _newRecipe = await newRecipe.save();
+    //         const newIngredient = await new Ingredient({
+    //             name: name,
+    //             amount: amount,
+    //         }).save();
 
-    //         return _newRecipe;
+    //         return 'createIngredient Success';
     //     } catch (err) {
-    //         throw new Error(err);
-    //         return;
+    //         return err;
     //     }
     // },
 
