@@ -1,6 +1,5 @@
 const { addErrorLoggingToSchema } = require("apollo-server");
 const Mongoose = require("mongoose");
-const Ingredient = require("../models/Ingredient");
 const Recipe = require("../models/Recipe");
 const User = require("../models/User");
 

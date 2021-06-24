@@ -1,14 +1,7 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { gql } = require('apollo-server');
 
 const typeDefs = gql`
-  # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-  # This "Book" type defines the queryable fields for every book in our data source.
-  type Ingredient {
-    name: String
-    amount: String
-  }
-  
   type Recipe {
     title: String
     ingredientNameList: [String]
@@ -16,9 +9,12 @@ const typeDefs = gql`
     content: String
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
+  type User {
+    email: String,,
+    recipes: [String],
+    ingredients: [String],
+  }
+
   type Query {
     recipes: [Recipe]
   }
@@ -34,7 +30,6 @@ const typeDefs = gql`
         ingredientAmountList: [String],
         content: String
         ): ID
-    # createIngredient(name: String, amount: String): String
   }
 `;
 
