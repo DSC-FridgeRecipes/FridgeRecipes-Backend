@@ -8,7 +8,6 @@ module.exports = {
 
         const _recipe = await Recipe.findById(recipeId);
         if (!_recipe) return 'Recipe Not Found';
-
         return _recipe;
     },
 
@@ -21,7 +20,24 @@ module.exports = {
 
         const recipeIdList = _user.recipes;
         const recipes = await Recipe.find({ _id: { $in: recipeIdList } });
+        return recipes;
+    },
 
+    /* Retrieved Recipe */
+    async getRecipesWithAllIngredients(_, { ingredients }) {
+        console.log('Query :: getRecipeWithAllIngredients', ingredients);
+
+        const recipes = await Recipe.find({ ingredientNameList: { $all: ingredients } });
+        return recipes;
+    },
+
+    async getRecipesWithSomeIngredients(_, { ingredients }) {
+        console.log('Query :: getRecipeWithSomeIngredients', ingredients);
+
+        const conditions = ingredients.map((ingredient) => ({
+            ingredientNameList: ingredient
+        }))
+        const recipes = await Recipe.find({ $or: conditions });
         return recipes;
     },
 }
