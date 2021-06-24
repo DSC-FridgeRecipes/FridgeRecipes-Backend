@@ -5,8 +5,8 @@ const Recipe = require("../models/Recipe");
 const User = require("../models/User");
 
 module.exports = {
-    async signUp(_, { email }) {
-        console.log('Mutation :: signIn', email);
+    async signup(_, { email }) {
+        console.log('Mutation :: signup', email);
         try {
             const newUser = await new User({
                 email: email,
@@ -14,7 +14,7 @@ module.exports = {
                 ingredients: [],
             }).save();
 
-            return 'signIn Success';
+            return 'signup Success';
         } catch (err) {
             return err;
         }
@@ -29,6 +29,19 @@ module.exports = {
         return `${_user.email} login Success`;
     },
 
+    async addMyIngredient(_, { id, ingredient }) {
+        console.log('Mutation :: addMyIngredient', id, ingredient);
+
+        const _user = await User.findByIdAndUpdate(id,
+            {
+                $push: { ingredients: ingredient }
+            }
+        );
+
+        if (!_user) return 'User Not Found';
+
+        return `${_user.ingredients} Add Ingredient Success`;
+    },
 
     async createIngredient(_, { name, amount }) {
         console.log('Mutation :: createIngredient', name, amount);

@@ -22,8 +22,10 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    signUp(email: String): String
+    signup(email: String): String
     login(email: String): String
+    addMyIngredient(id: ID, ingredient: String): String
+
     createIngredient(name: String, amount: String): String
   }
 `;
