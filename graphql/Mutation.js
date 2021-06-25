@@ -4,11 +4,12 @@ const User = require("../models/User");
 module.exports = {
 
     /* User */
-    async signup(_, { email }) {
+    async signup(_, { email, password }) {
         console.log('Mutation :: signup', email);
         try {
             const _user = await new User({
                 email: email,
+                password: password,
                 recipes: [],
                 ingredients: [],
             }).save();
@@ -19,7 +20,7 @@ module.exports = {
         }
     },
 
-    async login(_, { email }) {
+    async login(_, { email, password }) {
         console.log('Mutation :: login', email);
         const _user = await User.findOne({ email });
 

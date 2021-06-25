@@ -12,6 +12,7 @@ const typeDefs = gql`
 
   type User {
     email: String!
+    password: String!
     recipes: [ID]!
     ingredients: [String]!
   }
@@ -26,8 +27,8 @@ const typeDefs = gql`
 
   type Mutation {
     ### User ###
-    signup(email: String!): String!
-    login(email: String!): String!
+    signup(email: String!, password: String!): String!
+    login(email: String!, password: String!): String!
 
     ### Recipe ###
     createRecipe(

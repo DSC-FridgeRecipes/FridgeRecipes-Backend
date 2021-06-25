@@ -1,10 +1,10 @@
 const { model, Schema } = require('mongoose');
 
-const Recipe = new Schema({
+const RecipeSchema = new Schema({
     title: String,
     ingredientNameList: [String],
     ingredientAmountList: [String],
     content: String,
 });
 
-module.exports = model("Recipe", Recipe);
+module.exports = model("Recipe", RecipeSchema);
