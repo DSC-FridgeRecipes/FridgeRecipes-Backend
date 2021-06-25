@@ -25,6 +25,7 @@ module.exports = {
         const _user = await User.findOne({ email });
 
         if (!_user) return 'User Not Found';
+        if (password !== _user.password) return 'Wrong Password';
 
         return `${_user.email} login Success`;
     },
