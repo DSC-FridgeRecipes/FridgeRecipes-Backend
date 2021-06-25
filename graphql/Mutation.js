@@ -1,3 +1,6 @@
+const bcrypt = require('bcryptjs');
+const salt = bcrypt.genSaltSync(10);
+
 const Recipe = require("../models/Recipe");
 const User = require("../models/User");
 
@@ -7,14 +10,18 @@ module.exports = {
     async signup(_, { email, password }) {
         console.log('Mutation :: signup', email);
         try {
-            const _user = await new User({
+            const checkEmailExistence = await User.findOne({ email });
+            if (checkEmailExistence) return 'This email already exists';
+
+            const hash = bcrypt.hashSync(password, salt);
+            const _user = new User({
                 email: email,
-                password: password,
+                password: hash,
                 recipes: [],
                 ingredients: [],
             }).save();
 
-            return 'signup Success';
+            return `${email} signup Success`;
         } catch (err) {
             return err;
         }
@@ -23,9 +30,10 @@ module.exports = {
     async login(_, { email, password }) {
         console.log('Mutation :: login', email);
         const _user = await User.findOne({ email });
-
         if (!_user) return 'User Not Found';
-        if (password !== _user.password) return 'Wrong Password';
+
+        const checkPW = bcrypt.compareSync(password, _user.password);
+        if (!checkPW) return 'Wrong Password';
 
         return `${_user.email} login Success`;
     },
