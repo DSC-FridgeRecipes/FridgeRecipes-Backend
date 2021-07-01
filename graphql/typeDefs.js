@@ -21,6 +21,7 @@ const typeDefs = gql`
     ### Recipe ###
     getRecipe(recipeId: ID!): Recipe!
     getAllMyRecipes(userId: ID!): [Recipe]!
+    getAllMyIngredients(userId: ID!): [String]!
     getRecipesWithAllIngredients(ingredients: [String]!): [Recipe]!
     getRecipesWithSomeIngredients(ingredients: [String]!): [Recipe]!
   }

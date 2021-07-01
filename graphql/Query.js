@@ -23,6 +23,16 @@ module.exports = {
         return recipes;
     },
 
+    /* User - ingredients */
+    async getAllMyIngredients(_, { userId }) {
+        console.log('Query :: getAllMyRecipes', userId);
+
+        const _user = await User.findById(userId);
+        if (!_user) return 'User Not Found';
+
+        return _user.ingredients;
+    },
+
     /* Retrieved Recipe */
     async getRecipesWithAllIngredients(_, { ingredients }) {
         console.log('Query :: getRecipeWithAllIngredients', ingredients);
