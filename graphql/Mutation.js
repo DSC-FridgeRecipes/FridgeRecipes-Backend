@@ -1,3 +1,4 @@
+const { UserInputError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
 const salt = bcrypt.genSaltSync(10);
 
@@ -11,7 +12,9 @@ module.exports = {
         console.log('Mutation :: signup', email);
         try {
             const checkEmailExistence = await User.findOne({ email });
-            if (checkEmailExistence) return 'This email already exists';
+            if (checkEmailExistence) {
+                throw new UserInputError('Error :: This email already exists');
+            }
 
             const hash = bcrypt.hashSync(password, salt);
             const _user = new User({
@@ -30,10 +33,14 @@ module.exports = {
     async login(_, { email, password }) {
         console.log('Mutation :: login', email);
         const _user = await User.findOne({ email });
-        if (!_user) return 'User Not Found';
+        if (!_user) {
+            throw new UserInputError('Error :: User Not Found');
+        }
 
         const checkPW = bcrypt.compareSync(password, _user.password);
-        if (!checkPW) return 'Wrong Password';
+        if (!checkPW) {
+            throw new UserInputError('Error :: Wrong Password');
+        }
 
         return _user._id;
     },
@@ -67,7 +74,9 @@ module.exports = {
             }
         );
 
-        if (!_user) return 'User Not Found';
+        if (!_user) {
+            throw new UserInputError('Error :: User Not Found');
+        }
 
         return `${_user.ingredients} Add Ingredient Success`;
     },
@@ -81,7 +90,9 @@ module.exports = {
             }
         );
 
-        if (!_user) return 'User Not Found';
+        if (!_user) {
+            throw new UserInputError('Error :: User Not Found');
+        }
 
         return `${_user.ingredients} Remove Ingredient Success`;
     },
@@ -95,7 +106,9 @@ module.exports = {
             }
         );
 
-        if (!_user) return 'User Not Found';
+        if (!_user) {
+            throw new UserInputError('Error :: User Not Found');
+        }
 
         return `${_user.ingredients} Delete All Ingredient Success`;
     },
@@ -110,7 +123,9 @@ module.exports = {
             }
         );
 
-        if (!_user) return 'User Not Found';
+        if (!_user) {
+            throw new UserInputError('Error :: User Not Found');
+        }
 
         return `${_user.recipes} Add Recipe Success`;
     },
@@ -124,7 +139,9 @@ module.exports = {
             }
         );
 
-        if (!_user) return 'User Not Found';
+        if (!_user) {
+            throw new UserInputError('Error :: User Not Found');
+        }
 
         return `${_user.recipes} Remove Recipe Success`;
     },

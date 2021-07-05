@@ -1,3 +1,4 @@
+const { UserInputError } = require('apollo-server');
 const Recipe = require("../models/Recipe");
 const User = require("../models/User");
 
@@ -16,7 +17,9 @@ module.exports = {
         console.log('Query :: getAllMyRecipes', userId);
 
         const _user = await User.findById(userId);
-        if (!_user) return 'User Not Found';
+        if (!_user) {
+            throw new UserInputError('Error :: User Not Found');
+        }
 
         const recipeIdList = _user.recipes;
         const recipes = await Recipe.find({ _id: { $in: recipeIdList } });
@@ -28,7 +31,9 @@ module.exports = {
         console.log('Query :: getAllMyRecipes', userId);
 
         const _user = await User.findById(userId);
-        if (!_user) return 'User Not Found';
+        if (!_user) {
+            throw new UserInputError('Error :: User Not Found');
+        }
 
         return _user.ingredients;
     },
